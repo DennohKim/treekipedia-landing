@@ -16,20 +16,13 @@ const researchData = [
 ]
 
 export function ResearchTable() {
-  const { selectedSpecies } = useResearchContext()
 
-  if (!selectedSpecies) {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <p className="text-center text-white/70">Select a species to view research data.</p>
-      </div>
-    )
-  }
+
 
   return (
     <div className="h-full flex flex-col bg-white  rounded-xl">
       <h2 className="text-xl font-semibold mb-4 sticky top-0">
-        Research: {selectedSpecies.commonName}
+        Research: {}
       </h2>
       <div className="flex-1 overflow-auto">
         <Table>
