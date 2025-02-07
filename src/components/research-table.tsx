@@ -27,7 +27,7 @@ export function ResearchTable() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white  rounded-xl p-4">
+    <div className="h-full flex flex-col bg-white  rounded-xl">
       <h2 className="text-xl font-semibold mb-4 sticky top-0">
         Research: {selectedSpecies.commonName}
       </h2>
@@ -43,7 +43,7 @@ export function ResearchTable() {
             {researchData.map((item) => (
               <TableRow key={item.key}>
                 <TableCell className="font-medium">{item.label}</TableCell>
-                <TableCell className="">{selectedSpecies[item.key] || "Data not available"}</TableCell>
+                <TableCell className="">{ "Data not available"}</TableCell>
               </TableRow>
             ))}
           </TableBody>

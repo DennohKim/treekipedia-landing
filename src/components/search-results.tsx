@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useResearchContext } from "@/context/research-context"
 import { useQuery } from "@tanstack/react-query"
 import { searchTreeSpecies } from "@/lib/api"
+import Link from "next/link"
 
 export function SearchResults() {
   const searchParams = useSearchParams()
@@ -61,7 +62,7 @@ export function SearchResults() {
         {results.map((tree) => (
           <div key={tree.id} className="bg-white p-4 rounded-lg shadow mb-4">
             <h2 className="text-xl font-semibold text-green-800">
-              {tree.species_common_name}
+              {tree.commonName}
             </h2>
             <p className="text-gray-600 italic">{tree.species_scientific_name}</p>
             <ul className="mt-2 space-y-1">
@@ -82,13 +83,13 @@ export function SearchResults() {
                 <span className="font-medium">Order:</span> {tree.taxonomic_order}
               </li>
             </ul>
-            <div className="flex gap-2">
+            <Link href={`/species/${tree.id}`} className="flex gap-2">
               <Button
                 className="mt-4 bg-green-800"
                 onClick={() =>
                   setSelectedSpecies({
                     id: tree.id,
-                    commonName: tree.species_common_name,
+                    commonName: tree.commonName,
                     scientificName: tree.species_scientific_name,
                     family: tree.family,
                     genus: tree.genus,
@@ -100,7 +101,7 @@ export function SearchResults() {
               >
                 Research
               </Button>
-            </div>
+            </Link>
           </div>
         ))}
       </div>
