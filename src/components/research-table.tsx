@@ -19,12 +19,12 @@ export function ResearchTable() {
 
 
   return (
-    <div className="h-full flex flex-col bg-white  rounded-xl">
-      <h2 className="text-xl font-semibold mb-4 sticky top-0">
+    <div className="h-full p-4 flex flex-col bg-white rounded-xl">
+      <h2 className="text-xl font-semibold mb-4">
         Research: {}
       </h2>
       <div className="flex-1 overflow-auto">
-        <Table>
+        <Table className="border rounded-lg">
           <TableHeader>
             <TableRow>
               <TableHead className="w-1/3 ">Attribute</TableHead>
