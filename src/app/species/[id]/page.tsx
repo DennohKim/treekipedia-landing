@@ -97,7 +97,7 @@ const SpeciesDetailsPage = () => {
   }
   return (
     <div className="container mx-auto px-4 py-2">
-      <div className="flex items-center gap-2 py-10">
+      <div className="flex items-center gap-2 py-4">
         <ArrowLeft className="w-6 h-6" />
         <p onClick={() => router.back()} className="">
           Back to Search
