@@ -5,6 +5,7 @@ import { ResearchProvider } from "@/context/research-context";
 import Providers from "./providers";
 import '@coinbase/onchainkit/styles.css'; 
 import SilviLogo from '/public/SilviFaviconNew.svg'
+import { Suspense } from "react";
 
 
 
@@ -44,8 +45,14 @@ export default function RootLayout({
       <body
         className={montserrat.className}
       >
+        
         <Providers>
-          <ResearchProvider>{children}</ResearchProvider>
+          <ResearchProvider>
+            <Suspense>
+              {children}
+            </Suspense>
+            
+            </ResearchProvider>
         </Providers>
         </body>
     </html>
