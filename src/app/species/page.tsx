@@ -1,11 +1,11 @@
 import { SearchForm } from "@/components/search-form";
 import { SearchResults } from "@/components/search-results";
-// import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/navbar";
 
 export default function SpeciesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-100 to-green-200">
-      {/* <Navbar /> */}
+      <Navbar />
       <main className="w-full min-h-screen bg-white">
         <div
           className="relative min-h-screen flex flex-col"

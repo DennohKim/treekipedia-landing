@@ -1,6 +1,5 @@
 "use client"
 
-import { useResearchContext } from "@/context/research-context"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 const researchData = [
