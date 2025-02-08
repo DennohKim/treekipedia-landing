@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from 'react'
 import { OnchainKitProvider } from '@coinbase/onchainkit';
-import { base } from 'wagmi/chains'; // add baseSepolia for testing
+import { baseSepolia } from 'wagmi/chains'; // add baseSepolia for testing
 
 
 
@@ -22,7 +22,7 @@ const Providers = ({children}: {children: React.ReactNode}) => {
     
  
   return (
-    <OnchainKitProvider apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY} chain={base}>
+    <OnchainKitProvider apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY} chain={baseSepolia}>
     <QueryClientProvider client={queryClient}>
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
