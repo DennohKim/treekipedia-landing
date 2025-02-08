@@ -96,7 +96,7 @@ const SpeciesDetailsPage = () => {
     );
   }
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-2">
       <div className="flex items-center gap-2 py-10">
         <ArrowLeft className="w-6 h-6" />
         <p onClick={() => router.back()} className="">
@@ -105,20 +105,34 @@ const SpeciesDetailsPage = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-3xl font-bold mb-6">
+        {/* <h1 className="text-3xl font-bold mb-6">
           {species.species_common_name}
-        </h1>
+        </h1> */}
+
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">
+            {species.species_scientific_name}
+          </h1>
+          <p className="text-2xl text-gray-600">
+            {" "}
+            {species.species_common_name}
+          </p>
+        </div>
+
+        <div className="flex gap-4 mb-8">
+          <Button variant="primary" className="w-32">
+            Research
+          </Button>
+          <Button variant="outline" className="w-32">
+            NFT
+          </Button>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h2 className="text-xl font-semibold mb-4">
-              Scientific Classification
-            </h2>
+            <h2 className="text-xl font-semibold mb-4">Taxonomy </h2>
             <div className="space-y-2">
-              <p>
-                <span className="font-medium">Scientific Name:</span>{" "}
-                {species.species_scientific_name}
-              </p>
+             
               <p>
                 <span className="font-medium">Family:</span> {species.family}
               </p>
