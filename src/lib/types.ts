@@ -38,6 +38,7 @@ export interface ResearchPayload {
   researcherWallet: string;
 }
 
+
 export interface ResearchData {
   taxon_id: string;
   general_description: string;
@@ -53,6 +54,7 @@ export interface ResearchData {
   created_at: string;
   updated_at: string;
   revision: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   revision_history: any[];
   ipfs_cid: string;
   researcher_wallet: string;
