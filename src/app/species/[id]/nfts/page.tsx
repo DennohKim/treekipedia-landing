@@ -12,8 +12,8 @@ const NFT_CONTRACT_ADDRESS = "0x5Ed6240fCC0B2A231887024321Cc9481ba07f3c6";
 
 // Configure Alchemy SDK
 const alchemy = new Alchemy({
-  apiKey: "oh5H2WqCT5yAN_tygptGUrGd7gWrDnMP",
-  network: Network.BASE_SEPOLIA, // Adjust this based on your network
+  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+  network: Network.BASE_SEPOLIA,
 });
 
 // NFT Card Component
