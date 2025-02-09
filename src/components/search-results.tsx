@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import { searchTreeSpecies } from "@/lib/api"
 import Link from "next/link"
+import { Loader2 } from "lucide-react"
 
 export function SearchResults() {
   const searchParams = useSearchParams()
@@ -33,7 +34,8 @@ export function SearchResults() {
   if (isLoading) {
     return (
       <div className="h-full flex items-center justify-center">
-        <p className="text-center text-gray-800 p-8 rounded-xl bg-white shadow-[inset_-12px_-12px_24px_rgba(0,0,0,0.1),_inset_12px_12px_24px_rgba(255,255,255,0.5)]">
+        <p className="text-center text-white p-8 rounded-xl flex flex-col gap-4 items-center justify-center">
+          <Loader2 className="w-10 h-10 animate-spin text-green-500" />
           Loading...
         </p>
       </div>
