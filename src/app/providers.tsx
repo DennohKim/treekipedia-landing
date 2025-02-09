@@ -5,8 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from 'react'
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { baseSepolia } from 'wagmi/chains'; // add baseSepolia for testing
-import { Toaster } from '@/components/ui/sonner';
-
+import { Toaster } from 'react-hot-toast';
 
 
 
@@ -27,8 +26,7 @@ const Providers = ({children}: {children: React.ReactNode}) => {
     <QueryClientProvider client={queryClient}>
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
-      <Toaster />
-
+    <Toaster position="top-right" />
     </QueryClientProvider>
     </OnchainKitProvider>
   )
