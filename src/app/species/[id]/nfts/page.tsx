@@ -20,11 +20,11 @@ const alchemy = new Alchemy({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function NFTCard({ nft }: { nft: any }) {
-
-    console.log("nft", nft);
   return (
-    <div className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
-      <div className="relative w-full h-48">
+    <div className="rounded-xl bg-gray-100 p-2" style={{ 
+      boxShadow: '8px 8px 15px #d1d1d1, -8px -8px 15px #ffffff'
+    }}>
+      <div className="relative w-full h-48 rounded-lg overflow-hidden">
         {nft.image ? (
           <Image
             src={nft.image}
@@ -33,19 +33,19 @@ function NFTCard({ nft }: { nft: any }) {
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-lg">
             No Image
           </div>
         )}
       </div>
       <div className="p-4">
-        <h3 className="font-semibold text-lg mb-2">
+        <h3 className="font-semibold text-lg mb-2 text-gray-800">
           {nft.title || `Token ID: ${nft.tokenId}`}
         </h3>
         {nft.description && (
           <p className="text-sm text-gray-600 line-clamp-2">{nft.description}</p>
         )}
-        <div className="mt-2 text-sm text-black">
+        <div className="mt-2 text-sm text-gray-700">
           Quantity: {nft.balance}
         </div>
       </div>
@@ -114,7 +114,9 @@ export default function NFTsPage() {
     return (
       <div className="min-h-screen bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-col space-y-2 items-center justify-center gap-2">
+          <div className="flex flex-col space-y-2 items-center justify-center gap-2 p-8 rounded-xl" style={{
+            boxShadow: 'inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff'
+          }}>
             <Loader2 className="w-10 h-10 animate-spin text-green-500" />
             Loading NFTs...
           </div>
@@ -129,27 +131,35 @@ export default function NFTsPage() {
         <div className="mb-8">
           <Button
             onClick={() => router.back()}
-            variant="outline"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 px-6 py-2 rounded-xl bg-gray-100 text-gray-700 transition-all"
+            style={{
+              boxShadow: '5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff',
+            }}
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Species
           </Button>
         </div>
 
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h1 className="text-2xl font-bold mb-6">Your Research NFTs</h1>
+        <div className="rounded-xl p-8 bg-gray-100" style={{
+          boxShadow: '10px 10px 20px #d1d1d1, -10px -10px 20px #ffffff'
+        }}>
+          <h1 className="text-2xl font-bold mb-6 text-gray-800">Your Research NFTs</h1>
           
           {!address ? (
-            <div className="text-center py-8">
+            <div className="text-center py-8 rounded-xl bg-gray-100" style={{
+              boxShadow: 'inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff'
+            }}>
               Please connect your wallet to view NFTs
             </div>
           ) : nfts.length === 0 ? (
-            <div className="text-center py-8">
+            <div className="text-center py-8 rounded-xl bg-gray-100" style={{
+              boxShadow: 'inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff'
+            }}>
               No Research NFTs found in your wallet
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {nfts.map((nft) => (
                 <NFTCard key={nft.tokenId} nft={nft} />
               ))}
