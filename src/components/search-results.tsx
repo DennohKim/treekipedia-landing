@@ -18,11 +18,11 @@ export function SearchResults() {
   if (!query) {
     return (
       <div className="h-full flex items-center justify-center p-8">
-        <div className="text-center p-8 rounded-xl shadow-[inset_-12px_-12px_24px_rgba(0,0,0,0.1),_inset_12px_12px_24px_rgba(255,255,255,0.5)]">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+        <div className="text-center p-8 rounded-xl ">
+          <h3 className="text-lg font-semibold text-green-500 mb-2">
             Start Your Tree Research
           </h3>
-          <p className="text-gray-600">
+          <p className="text-white">
             Enter a tree species name in the search box above to discover detailed information about different trees.
           </p>
         </div>
