@@ -1,54 +1,123 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useReadContract } from "wagmi";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { Network, Alchemy } from "alchemy-sdk";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const NFT_CONTRACT_ADDRESS = "0x5Ed6240fCC0B2A231887024321Cc9481ba07f3c6";
 
-// Basic ERC721 ABI for balanceOf and tokenOfOwnerByIndex
-const abi = [
-  {
-    inputs: [{ internalType: "address", name: "owner", type: "address" }],
-    name: "balanceOf",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "owner", type: "address" },
-      { internalType: "uint256", name: "index", type: "uint256" },
-    ],
-    name: "tokenOfOwnerByIndex",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-] as const;
+// Configure Alchemy SDK
+const alchemy = new Alchemy({
+  apiKey: "oh5H2WqCT5yAN_tygptGUrGd7gWrDnMP",
+  network: Network.BASE_SEPOLIA, // Adjust this based on your network
+});
+
+// NFT Card Component
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function NFTCard({ nft }: { nft: any }) {
+
+    console.log("nft", nft);
+  return (
+    <div className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+      <div className="relative w-full h-48">
+        {nft.image ? (
+          <Image
+            src={nft.image}
+            alt={nft.title || "NFT"}
+            fill
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            No Image
+          </div>
+        )}
+      </div>
+      <div className="p-4">
+        <h3 className="font-semibold text-lg mb-2">
+          {nft.title || `Token ID: ${nft.tokenId}`}
+        </h3>
+        {nft.description && (
+          <p className="text-sm text-gray-600 line-clamp-2">{nft.description}</p>
+        )}
+        <div className="mt-2 text-sm text-black">
+          Quantity: {nft.balance}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function NFTsPage() {
   const { address } = useAccount();
   const router = useRouter();
-//   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [nfts, setNfts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  console.log("nfts", nfts);
 
-  const { data: nftBalance, isLoading: balanceLoading } = useReadContract({
-    address: NFT_CONTRACT_ADDRESS,
-    abi,
-    functionName: "balanceOf",
-    args: [address!],
-    // enabled: !!address,
-  });
+  useEffect(() => {
+    async function fetchNFTs() {
+      if (!address) {
+        setLoading(false);
+        return;
+      }
 
-  console.log(nftBalance);
+      try {
+        const response = await alchemy.nft.getNftsForOwner(
+            address,
+            {
+              contractAddresses: [NFT_CONTRACT_ADDRESS],
+              omitMetadata: false,
+            }
+          );
 
-  if (balanceLoading) {
+        // Transform the NFT data
+        const nftData = await Promise.all(
+          response.ownedNfts.map(async (nft) => {
+            const metadata = nft?.raw.metadata;
+            let image = metadata?.image || '';
+            
+            if (image.startsWith('ipfs://')) {
+              image = image.replace('ipfs://', 'https://ipfs.io/ipfs/');
+            }
+
+            return {
+              tokenId: nft.tokenId,
+              title: metadata?.name || `NFT #${nft.tokenId}`,
+              description: metadata?.description,
+              image: image,
+              // Add balance information since ERC1155 tokens can have multiple copies
+              balance: nft.balance,
+            };
+          })
+        );
+
+        console.log("Fetched NFT data:", nftData);
+        setNfts(nftData);
+      } catch (error) {
+        console.error("Error fetching NFTs:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNFTs();
+  }, [address]);
+
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="text-center">Loading NFTs...</div>
+          <div className="flex flex-col space-y-2 items-center justify-center gap-2">
+            <Loader2 className="w-10 h-10 animate-spin text-green-500" />
+            Loading NFTs...
+          </div>
         </div>
       </div>
     );
@@ -75,16 +144,15 @@ export default function NFTsPage() {
             <div className="text-center py-8">
               Please connect your wallet to view NFTs
             </div>
-          ) : nftBalance?.toString() === "0" ? (
+          ) : nfts.length === 0 ? (
             <div className="text-center py-8">
               No Research NFTs found in your wallet
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* You can add NFT card components here */}
-              <div className="p-4 border rounded-lg">
-                <div>Total NFTs: {nftBalance?.toString()}</div>
-              </div>
+              {nfts.map((nft) => (
+                <NFTCard key={nft.tokenId} nft={nft} />
+              ))}
             </div>
           )}
         </div>

@@ -210,7 +210,7 @@ const SpeciesDetailsPage = () => {
                     <span>{species.genus}</span>
                   </p>
                   {species.subspecies && (
-                    <p className="flex justify-between items-center p-3 rounded-lg bg-gray-100 
+                    <p className="flex justify-between items-center gap-2 p-3 rounded-lg bg-gray-100 
                       shadow-[3px_3px_6px_#d1d1d1,-3px_-3px_6px_#ffffff]">
                       <span className="font-medium">Subspecies:</span>
                       <span>{species.subspecies}</span>
