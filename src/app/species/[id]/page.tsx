@@ -191,7 +191,7 @@ const SpeciesDetailsPage = () => {
                   disabled={researchMutation.isPending}
                   onClick={() => router.push(`/species/${speciesId}/nfts`)}
                 >
-                  View NFT
+                  View my NFTs
                 </Button>
               </div>
 
