@@ -21,9 +21,9 @@ const alchemy = new Alchemy({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function NFTCard({ nft }: { nft: any }) {
   return (
-    <div className="rounded-xl bg-gray-100 p-2" style={{ 
-      boxShadow: '8px 8px 15px #d1d1d1, -8px -8px 15px #ffffff'
-    }}>
+    <div className="rounded-xl bg-gray-100 p-2 transform transition-all duration-300 hover:-translate-y-2
+    shadow-[8px_8px_15px_#d1d1d1,-8px_-8px_15px_#ffffff]
+    hover:shadow-[12px_12px_20px_#d1d1d1,-12px_-12px_20px_#ffffff]">
       <div className="relative w-full h-48 rounded-lg overflow-hidden">
         {nft.image ? (
           <Image
@@ -131,10 +131,11 @@ export default function NFTsPage() {
         <div className="mb-8">
           <Button
             onClick={() => router.back()}
-            className="flex items-center gap-2 px-6 py-2 rounded-xl bg-gray-100 text-gray-700 transition-all"
-            style={{
-              boxShadow: '5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff',
-            }}
+            variant="outline"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gray-100 text-black 
+            shadow-[5px_5px_10px_#d1d1d1,-5px_-5px_10px_#ffffff] 
+            hover:shadow-[inset_5px_5px_10px_#d1d1d1,inset_-5px_-5px_10px_#ffffff] 
+            transition-all duration-300"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Species
