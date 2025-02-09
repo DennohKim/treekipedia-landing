@@ -16,7 +16,7 @@ export default function SpeciesPage() {
             backgroundPosition: "center",
           }}
         >
-          <div className="max-w-6xl mx-auto pt-6 px-4 w-full">
+          <div className="max-w-6xl mx-auto md:pt-16 pt-24 px-4 w-full">
             <h1 className="text-xl md:text-4xl font-bold mb-6 text-white text-center">
               The Open Encyclopedia of Trees
             </h1>
