@@ -2,10 +2,16 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const BACKEND_URL = "http://64.227.23.153:3000"
 
-export async function GET(request: NextRequest, { params }: { params: { path: string[] } }) {
+type RouteParams = Promise<{ path: string[] }>
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: RouteParams }
+) {
   try {
     // Join the path segments and add any query parameters
-    const pathSegments = params.path.join("/")
+    const { path } = await params
+    const pathSegments = path.join("/")
     const url = `${BACKEND_URL}/${pathSegments}${request.nextUrl.search}`
 
     console.log("Proxying GET request to:", url)
@@ -20,10 +26,14 @@ export async function GET(request: NextRequest, { params }: { params: { path: st
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { path: string[] } }) {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: RouteParams }
+) {
   try {
     // Join the path segments
-    const pathSegments = params.path.join("/")
+    const { path } = await params
+    const pathSegments = path.join("/")
     const url = `${BACKEND_URL}/${pathSegments}`
 
     console.log("Proxying POST request to:", url)
