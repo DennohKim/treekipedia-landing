@@ -2,22 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const BACKEND_URL = 'http://64.227.23.153:3000';
 
-type RouteParams = {
-  params: {
-    path: string[]
-  }
-}
-
-export async function GET(
-  request: NextRequest,
-  context: RouteParams
-) {
+export async function GET(request: NextRequest) {
   try {
-    // Join the path segments and add any query parameters
-    const pathSegments = context.params.path.join('/');
-    const url = `${BACKEND_URL}/${pathSegments}${request.nextUrl.search}`;
-
-    console.log('Proxying GET request to:', url);
+    // Get the path from the request URL
+    const path = request.nextUrl.pathname.replace('/api/proxy', '');
+    const url = `${BACKEND_URL}${path}${request.nextUrl.search}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -32,16 +21,11 @@ export async function GET(
   }
 }
 
-export async function POST(
-  request: NextRequest,
-  context: RouteParams
-) {
+export async function POST(request: NextRequest) {
   try {
-    // Join the path segments
-    const pathSegments = context.params.path.join('/');
-    const url = `${BACKEND_URL}/${pathSegments}`;
-
-    console.log('Proxying POST request to:', url);
+    // Get the path from the request URL
+    const path = request.nextUrl.pathname.replace('/api/proxy', '');
+    const url = `${BACKEND_URL}${path}`;
 
     const body = await request.json();
     const response = await fetch(url, {
