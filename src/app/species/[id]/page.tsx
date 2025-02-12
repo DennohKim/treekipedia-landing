@@ -44,7 +44,7 @@ const SpeciesDetailsPage = () => {
       if (!species?.species_scientific_name)
         throw new Error("No scientific name available");
       const { data } = await axios.get(
-        `/api/proxy/ai/research/${species?.species_scientific_name}`
+        `/api/proxy/ai/research/${encodeURIComponent(species.species_scientific_name)}`
       );
       return data;
     },
