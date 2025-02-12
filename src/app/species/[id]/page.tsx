@@ -44,7 +44,7 @@ const SpeciesDetailsPage = () => {
       if (!species?.species_scientific_name)
         throw new Error("No scientific name available");
       const { data } = await axios.get(
-        `http://64.227.23.153:3000/ai/research/${species?.species_scientific_name}`
+        `/api/proxy/ai/research/${species?.species_scientific_name}`
       );
       return data;
     },
@@ -57,7 +57,7 @@ const SpeciesDetailsPage = () => {
     mutationFn: async (payload: ResearchPayload) => {
       console.log("Sending research payload:", payload);
       const response = await axios.post(
-        "http://64.227.23.153:3000/ai/research",
+        "/api/proxy/ai/research",
         payload
       );
       console.log("Research response:", response.data);
@@ -65,7 +65,6 @@ const SpeciesDetailsPage = () => {
     },
     onSuccess: (data) => {
       console.log("Research mutation successful:", data);
-      // Refetch research data after successful mutation
       refetchResearch();
     },
     onError: (error) => {
@@ -156,7 +155,7 @@ const SpeciesDetailsPage = () => {
             shadow-[5px_5px_10px_#d1d1d1,-5px_-5px_10px_#ffffff] 
             hover:shadow-[inset_5px_5px_10px_#d1d1d1,inset_-5px_-5px_10px_#ffffff] 
             transition-all duration-300"
-          >
+          > 
             <ArrowLeft className="w-6 h-6" />
             Back to Search
           </Button>
