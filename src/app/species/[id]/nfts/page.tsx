@@ -145,7 +145,7 @@ export default function NFTsPage() {
         <div className="rounded-xl p-8 bg-gray-100" style={{
           boxShadow: '10px 10px 20px #d1d1d1, -10px -10px 20px #ffffff'
         }}>
-          <h1 className="text-2xl font-bold mb-6 text-gray-800">Your Research NFTs</h1>
+          <h1 className="text-2xl font-bold mb-6 text-gray-800">ConTreebution NFTs</h1>
           
           {!address ? (
             <div className="text-center py-8 rounded-xl bg-gray-100" style={{
