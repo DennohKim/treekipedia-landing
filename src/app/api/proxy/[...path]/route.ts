@@ -48,23 +48,59 @@ export async function POST(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-      // Add signal with longer timeout (29 seconds)
       signal: AbortSignal.timeout(180000),
     })
+
+    // Check if the response is ok before trying to parse JSON
+    if (!response.ok) {
+      console.error(`Backend responded with status ${response.status}`);
+      const errorText = await response.text();
+      console.error('Backend error:', errorText);
+      return NextResponse.json(
+        { error: `Backend error: ${response.status}`, details: errorText },
+        { status: response.status }
+      );
+    }
 
     // Handle streaming response
     const data = await response.json()
     return NextResponse.json(data)
   } catch (error) {
-    console.error("Proxy error:", error)
+    console.error("Detailed proxy error:", {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause
+    })
+
     if (error instanceof Error && error.name === 'TimeoutError') {
       return NextResponse.json(
-        { error: "Request timed out" },
+        { error: "Request timed out", details: error.message },
         { status: 504 }
       )
     }
+
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: "Invalid JSON response from backend", details: error.message },
+        { status: 502 }
+      )
+    }
+
+    // Handle network errors
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      return NextResponse.json(
+        { error: "Network error", details: error.message },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json(
-      { error: "Failed to process request" },
+      { 
+        error: "Failed to process request",
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     )
   }
