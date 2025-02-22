@@ -49,7 +49,7 @@ export async function POST(
       },
       body: JSON.stringify(body),
       // Add signal with longer timeout (29 seconds)
-      signal: AbortSignal.timeout(29000),
+      signal: AbortSignal.timeout(180000),
     })
 
     // Handle streaming response
