@@ -18,6 +18,8 @@ export function SearchResults() {
     enabled: !!query && !!address,
   });
 
+  console.log("results", results);
+
   if (!address) {
     return (
       <div className="h-full flex items-center justify-center p-8">
